@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Panel - Vulnerable Store{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Admin Panel</h4>
+                <div>
+                    <small class="text-muted">Admin Path: /adminqwerty123</small>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- User Management Section -->
+                <h5>User Management</h5>
+                <div class="table-responsive mb-5">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Balance</th>
+                                <th>Admin</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>IDR {{ user.balance }}</td>
+                                <td>{% if user.is_admin == 1 %}Yes{% else %}No{% endif %}</td>
+                                <td>
+                                    <a href="{{ url_for('profile', username=user.username) }}" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Purchase History Section -->
+                <h5>Purchase History</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Product</th>
+                                <th>Price Paid</th>
+                                <th>Purchase Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for purchase in purchases %}
+                            <tr>
+                                <td>{{ purchase.id }}</td>
+                                <td>{{ purchase.username }} (ID: {{ purchase.user_id }})</td>
+                                <td>{{ purchase.product_name }} (ID: {{ purchase.product_id }})</td>
+                                <td>IDR {{ purchase.price }}</td>
+                                <td>{{ purchase.purchase_date }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% if not purchases %}
+                            <tr>
+                                <td colspan="5" class="text-center">No purchases recorded yet.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
