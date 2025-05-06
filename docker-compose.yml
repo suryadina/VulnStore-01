@@ -1,0 +1,8 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  vulnstore:
+    build: .
+    ports:
+      - "62292:62292"
+    restart: unless-stopped
