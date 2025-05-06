@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Vulnerable Store - Verify TOTP{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>Two-Factor Authentication</h4>
+            </div>
+            <div class="card-body">
+                <p>Enter the code from your authenticator app.</p>
+                
+                <form method="POST" action="{{ url_for('verify_totp') }}">
+                    <div class="mb-3">
+                        <label for="totp_code" class="form-label">Authentication Code:</label>
+                        <input type="text" class="form-control" id="totp_code" name="totp_code" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Verify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

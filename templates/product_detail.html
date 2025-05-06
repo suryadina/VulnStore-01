@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Vulnerable Store{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{ product.name }}</h2>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><strong>Price:</strong> IDR {{ product.price }}</p>
+                
+                <form method="POST" action="{{ url_for('checkout') }}">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <!-- Vulnerability: Client can modify this price value -->
+                    <input type="hidden" name="price" value="{{ product.price }}">
+                    <button type="submit" class="btn btn-success">Buy Now</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('catalog') }}" class="btn btn-secondary">Back to Catalog</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

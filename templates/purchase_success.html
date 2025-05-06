@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Purchase Successful - Vulnerable Store{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Purchase Successful!</h4>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-check-circle" style="font-size: 4rem; color: green;"></i>
+                </div>
+                
+                <h5 class="card-title">Thank you for your purchase</h5>
+                
+                <div class="mt-4">
+                    <h6>Order Details:</h6>
+                    <table class="table">
+                        <tr>
+                            <th>Order ID:</th>
+                            <td>{{ purchase.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Product:</th>
+                            <td>{{ purchase.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td>{{ purchase.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Price:</th>
+                            <td>IDR {{ purchase.price }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <td>{{ purchase.purchase_date }}</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>Note:</strong> A confirmation has been sent to your account.
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Return to Home</a>
+                <a href="{{ url_for('catalog') }}" class="btn btn-secondary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

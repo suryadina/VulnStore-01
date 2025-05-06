@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Vulnerable Store - Setup TOTP{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>Setup Two-Factor Authentication</h4>
+            </div>
+            <div class="card-body">
+                <p>Scan the QR code with your authenticator app (like Google Authenticator, Authy, etc.) or enter the secret key manually.</p>
+                
+                <div class="text-center mb-3">
+                    <canvas id="qrcode"></canvas>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="secret" class="form-label">Secret Key:</label>
+                    <input type="text" class="form-control" id="secret" value="{{ secret }}" readonly>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <strong>Important:</strong> Save your secret key in a safe place. You'll need it if you lose access to your authenticator app.
+                </div>
+                
+                <form method="POST" action="{{ url_for('verify_totp') }}">
+                    <div class="mb-3">
+                        <label for="totp_code" class="form-label">Enter the code from your authenticator app:</label>
+                        <input type="text" class="form-control" id="totp_code" name="totp_code" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Verify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const qr = new QRious({
+            element: document.getElementById('qrcode'),
+            value: '{{ provisioning_url }}',
+            size: 200
+        });
+    });
+</script>
+{% endblock %}

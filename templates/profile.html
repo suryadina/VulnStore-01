@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile - Vulnerable Store{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4>User Profile</h4>
+            </div>
+            <div class="card-body">
+                {% if user %}
+                <div class="mb-4">
+                    <h5>Account Information</h5>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Balance:</strong> IDR {{ user.balance }}</p>
+                </div>
+                
+                <div class="mb-4">
+                    <h5>Change Password</h5>
+                    <!-- IDOR Vulnerability: No check if the user is modifying their own profile -->
+                    <form method="POST" action="{{ url_for('profile', username=user.username) }}">
+                        <div class="mb-3">
+                            <label for="new_password" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="new_password" name="new_password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="alert alert-danger">
+                    User not found.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const password = document.getElementById('new_password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            alert('Passwords do not match!');
+        }
+    });
+</script>
+{% endblock %}

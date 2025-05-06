@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Vulnerable Store - Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to Vulnerable Store</h1>
+    <p class="lead">The most vulnerable online store on the web! (For educational purposes only)</p>
+    <hr class="my-4">
+    {% if not logged_in %}
+    <p>Register now and get a sign-up bonus of IDR 100,000!</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register Now</a>
+    {% else %}
+    <p>Explore our catalog and find something you like!</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('catalog') }}" role="button">Browse Catalog</a>
+    {% endif %}
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Wide Selection</h5>
+                <p class="card-text">Browse our wide selection of products for all your needs.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Great Prices</h5>
+                <p class="card-text">We offer competitive prices on all our products.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Secure Shopping</h5>
+                <p class="card-text">Shop with confidence on our secure platform. (Or is it?)</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

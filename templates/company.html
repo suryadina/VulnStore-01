@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Company Profile - Vulnerable Store{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>About Our Company</h4>
+            </div>
+            <div class="card-body">
+                <h5>Vulnerable Store</h5>
+                <p>Founded in 2023, Vulnerable Store has been a leader in providing high-quality products at competitive prices. Our mission is to offer the best shopping experience for our customers.</p>
+                
+                <h5>Our Vision</h5>
+                <p>To become the most trusted online store that customers can rely on for their shopping needs.</p>
+                
+                <h5>Contact Information</h5>
+                <p>
+                    <strong>Address:</strong> 123 Vulnerability Street, Insecure City<br>
+                    <strong>Phone:</strong> +123-456-7890<br>
+                    <strong>Email:</strong> info@vulnerablestore.example
+                </p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h4>Customer Comments</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('company') }}">
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Leave a Comment:</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                </form>
+                
+                <hr>
+                
+                <h5 class="mt-4">Recent Comments</h5>
+                {% if comments %}
+                    {% for comment in comments %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <!-- XSS vulnerability: Displaying raw HTML from user input -->
+                            <p>{{ comment.comment | safe }}</p>
+                            <footer class="blockquote-footer">
+                                {{ comment.username }} on {{ comment.timestamp }}
+                            </footer>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No comments yet. Be the first to comment!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
